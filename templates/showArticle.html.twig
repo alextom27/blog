@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Articles</h1>
+    {{ dump(categories) }}
+    {{ dump(articles) }}
+    {% for category in categories %}
+        {{ category.name }} : {{ category.articles }}
+    {% endfor %}
+{% endblock %}
