@@ -6,15 +6,24 @@
 {% block stylesheets %}{% endblock %}
 
 {% block body %}
-
-    <div>
-        <h1>Real article s title : {{ article.title }}</h1>
-        <h2>Category : {{ article.category.name }}</h2>
-        <p>{{ article.content }}</p>
+    <div class="container" style="padding-top: 2%; padding-bottom: 3%">
+        <div class="rows">
+            <div class="col text-center">
+                <h1>{{ article.title }}</h1></div>
+            <div class="row">
+                <div class="col">
+                    <h5>Category : {{ article.category.name }}</h5>
+                    <p>{{ article.content }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                <a href="{{ path('homepage') }}">
+                    Back to homepage.
+                </a>
+            </div>
+        </div>
     </div>
-
-    <a href="{{ path('homepage') }}">
-        Back to homepage.
-    </a>
 
 {% endblock %}
