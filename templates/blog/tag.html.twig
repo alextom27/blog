@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Articles{% endblock %}
+{% block title %}All Tag{% endblock %}
 
 {% block stylesheets %}{% endblock %}
 
@@ -8,16 +8,13 @@
     <div class="container" style="padding-top: 2%; padding-bottom: 3%">
         <div class="row">
             <div class="col">
-                <h1 class="text-center">All articles for {{ name }} : </h1>
+                <h2>All articles from <i>#{{ tag.name }}</i> tag : </h2>
                 {% for article in articles %}
-                    <div>
-                        <h2>{{ loop.index }} / {{ article.title }}</h2><h5>Category : {{ name }}</h5>
-                        <p>{{ article.content }}</p>
-                    </div>
+                    <h4>art.{{ article.id }} / {{ article.title }}</h4>
+                    <p>{{ article.content }}</p>
                 {% endfor %}
             </div>
         </div>
-
 
         <div class="row">
             <div class="col text-right">
@@ -28,4 +25,3 @@
         </div>
     </div>
 {% endblock %}
-

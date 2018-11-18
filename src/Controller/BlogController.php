@@ -8,11 +8,14 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Article;
+use App\Entity\Category;
+use App\Form\ArticleSearchType;
+use App\Form\CategoryType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class BlogController
@@ -47,7 +50,7 @@ class BlogController extends AbstractController
 
 
     /**
-     * @Route("/blog/{slug<^[a-z0-9-]+$>}",
+     * @Route("/blog/article/{slug<^[a-z0-9-]+$>}",
      * defaults={"slug" = null},
      * name="blog_show")
      * @return Response A response instance
@@ -80,14 +83,13 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/category/{category}", name="blog_show_category")
+     * @Route("/blog/category/{category}", name="blog_show_category")
      */
     public function showByCategory(string $category): Response
     {
-        $idCategory = $this->getDoctrine()
+        $Category = $this->getDoctrine()
             ->getRepository(Category::class)
-            ->findOneBy(['name' => $category])
-            ->getId();
+            ->findOneByName($category);
 
         $articles = $this->getDoctrine()
             ->getRepository(Article::class)
@@ -108,7 +110,7 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/category/{category}/all", name="blog_all_show_category")
+     * @Route("/blog/category/{category}/all", name="blog_all_show_category")
      */
     public function showAllByCategory(string $category): Response
     {
@@ -131,6 +133,8 @@ class BlogController extends AbstractController
             ]
         );
     }
+
+
 
 
 

@@ -6,17 +6,35 @@
 
 {% block body %}
     <div class="container" style="padding-top: 2%; padding-bottom: 3%">
+
+        <div class="row">
+            <div class="col">
+
+            </div>
+        </div>
+
+
         <div class="row">
             <div class="col">
                 <h1 class="text-center">All articles from article's table</h1>
                 {% for article in articles %}
                     <div>
-                        <h2>{{ loop.index }} / {{ article.title }}</h2><h5>Category : {{ article.category.name }}</h5>
+                        <h2>{{ loop.index }} / {{ article.title }}</h2>
+                        <h5><i>Category : {{ article.category.name }} /
+                            Tag :
+
+                                {% for tag in article.tags %}
+                                    #{{ tag.name }}
+                                {% endfor %}
+                            </i>
+                        </h5>
                         <p>{{ article.content }}</p>
                     </div>
                 {% endfor %}
             </div>
         </div>
+
+
         <div class="row">
             <div class="col text-right">
                 <a href="{{ path('homepage') }}">
