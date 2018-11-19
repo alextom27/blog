@@ -42,9 +42,18 @@ class BlogController extends AbstractController
             );
         }
 
+        $form = $this->createForm(
+            ArticleSearchType::class,
+            null,
+            ['method' => Request::METHOD_GET]
+        );
+
         return $this->render(
             'blog/index.html.twig',
-            ['articles' => $articles]
+            [
+                'articles' => $articles,
+                'form' => $form->createView()
+            ]
         );
     }
 
@@ -93,7 +102,7 @@ class BlogController extends AbstractController
 
         $articles = $this->getDoctrine()
             ->getRepository(Article::class)
-            ->findBy(['category' => $idCategory], ['id' => 'desc'], 3);
+            ->findBy(['category' => $Category], ['id' => 'desc'], 3);
 
         if (!$articles) {
             throw $this->createNotFoundException(
@@ -133,9 +142,6 @@ class BlogController extends AbstractController
             ]
         );
     }
-
-
-
 
 
 }

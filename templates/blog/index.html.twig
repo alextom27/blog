@@ -6,11 +6,12 @@
 
 {% block body %}
     <div class="container" style="padding-top: 2%; padding-bottom: 3%">
-
         <div class="row">
-            <div class="col">
+            {{ form_start(form) }}
+            {{ form_row(form.searchField) }}
+            <button type="submit" name="btnSearch">Rechercher</button>
+            {{ form_end(form) }}
 
-            </div>
         </div>
 
 
@@ -21,7 +22,7 @@
                     <div>
                         <h2>{{ loop.index }} / {{ article.title }}</h2>
                         <h5><i>Category : {{ article.category.name }} /
-                            Tag :
+                                Tag :
 
                                 {% for tag in article.tags %}
                                     #{{ tag.name }}
