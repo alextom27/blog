@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/category/add", name="add_category")
+     * @Route("/category", name="add_category")
      *
      * @return Response A response instance
      */

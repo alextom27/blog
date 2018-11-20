@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container" style="padding-top: 2%; padding-bottom: 3%">
+    {{ form_start(form) }}
+    {{ form_row(form) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+    </div>
+{% endblock %}

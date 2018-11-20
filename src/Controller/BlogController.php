@@ -8,14 +8,17 @@
 
 namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use App\Entity\Article;
 use App\Entity\Category;
 use App\Form\ArticleSearchType;
 use App\Form\CategoryType;
+use App\Form\ArticleType;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Article;
+use App\Entity\Tag;
 
 /**
  * Class BlogController
@@ -141,6 +144,27 @@ class BlogController extends AbstractController
                 'name' => $category->getName()
             ]
         );
+    }
+
+    /**
+     * @param string $category
+     *
+     * @Route("/tag/{tag}/all", name="show_all_tag")
+     *
+     * @return Response
+     *
+     */
+    public function showAllByTag(string $tag) : Response
+    {
+        $tag = $this->getDoctrine()
+            ->getRepository(Tag::class)->findOneByName($tag);
+        if (!$tag) {
+            throw $this->createNotFoundException(
+                'No tag with ' . $tag . ' title, found in tag\'s table.'
+            );
+        }
+        $articles = $tag->getArticles();
+        return $this->render('blog/tag.html.twig', compact('tag', 'articles'));
     }
 
 
