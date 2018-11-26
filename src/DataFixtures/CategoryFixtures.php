@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: wilder
- * Date: 21/11/18
- * Time: 16:21
+ * Date: 26/11/18
+ * Time: 16:30
  */
 
 namespace App\DataFixtures;
@@ -19,8 +19,7 @@ class CategoryFixtures extends Fixture
         'Java',
         'Javascript',
         'Ruby',
-        'DevOps',
-        'Kotlin',
+        'Devops'
     ];
 
     public function load(ObjectManager $manager)
