@@ -2,7 +2,6 @@
 
 {% block title %}Index{% endblock %}
 
-{% block stylesheets %}{% endblock %}
 
 {% block body %}
     <div class="container" style="padding-top: 2%; padding-bottom: 3%">
@@ -20,7 +19,7 @@
                 <h1 class="text-center">All articles from article's table</h1>
                 {% for article in articles %}
                     <div>
-                        <h2>{{ loop.index }} / {{ article.title }}</h2>
+                        <h2>{{ loop.index }} / <a href="{{ path('article_show', {'id': article.id}) }}">{{ article.title }}</a></h2>
                         <h5><i>Category : {{ article.category.name }} /
                                 Tag :
 
