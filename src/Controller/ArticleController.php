@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Form\ArticleType;
+use App\Service\Slugify;
 use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,16 +24,23 @@ class ArticleController extends AbstractController
         return $this->render('article/index.html.twig', ['articles' => $articleRepository->findAll()]);
     }
 
+
+
     /**
      * @Route("/new", name="article_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Slugify $slugify): Response
     {
+
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
+
+
         if ($form->isSubmitted() && $form->isValid()) {
+            $article->setSlug($slugify->generate($article->getTitle()));
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
             $em->flush();
@@ -47,22 +55,28 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="article_show", methods="GET")
+     * @param string $slug The slugger
+     *
+     * @Route("/{id}-{slug}/", name="article_show", methods="GET")
      */
     public function show(Article $article): Response
     {
         return $this->render('article/show.html.twig', ['article' => $article]);
     }
 
+
     /**
      * @Route("/{id}/edit", name="article_edit", methods="GET|POST")
      */
-    public function edit(Request $request, Article $article): Response
+    public function edit(Request $request, Article $article, Slugify $slugify): Response
     {
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $article->setSlug($slugify->generate($article->getTitle()));
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('article_index', ['id' => $article->getId()]);
@@ -75,11 +89,11 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="article_delete", methods="DELETE")
+     * @Route("/{id}/delete", name="article_delete", methods="DELETE")
      */
     public function delete(Request $request, Article $article): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $article->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($article);
             $em->flush();

@@ -36,12 +36,13 @@
                 <a href="{{ path('article_index') }}">back to list</a>
             </div>
             <div class="col">
-                <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>
+                <a href="{{ path('article_edit', {'id': article.id, 'slug': article.slug | lower}) }}">edit</a>
             </div>
             <div class="col">
                 {{ include('article/_delete_form.html.twig') }}
             </div>
         </div>
+        {{ article.slug }}
 
     </div>
 

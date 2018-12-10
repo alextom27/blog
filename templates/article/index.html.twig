@@ -22,7 +22,7 @@
                     <h3>{{ article.title }}</h3>
                     {{ article.content }}
 
-                    <a href="{{ path('article_show', {'id': article.id}) }}">show</a>
+                    <a href="{{ path('article_show', {'id': article.id, 'slug': article.slug}) }}">show</a>
                     <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>
                 </div>
 
